@@ -1,54 +1,93 @@
--- MySQL dump 10.13  Distrib 8.0.28, for Win64 (x86_64)
---
--- Host: localhost    Database: rhsolutionstalent
--- ------------------------------------------------------
--- Server version	8.0.28
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2025-11-13 21:13:15
--- MySQL dump 10.13  Distrib 8.0.28, for Win64 (x86_64)
---
--- Host: localhost    Database: livraria
--- ------------------------------------------------------
--- Server version	8.0.28
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2025-11-13 21:13:15
+-- ==========================================
+-- TABELA: Alunos
+-- ==========================================
+CREATE TABLE Alunos (
+    AlunoID INT AUTO_INCREMENT PRIMARY KEY,
+    Nome VARCHAR(100) NOT NULL,
+    DataNascimento DATE,
+    Email VARCHAR(100)
+);
+ 
+-- ==========================================
+-- TABELA: Professores
+-- ==========================================
+CREATE TABLE Professores (
+    ProfessorID INT AUTO_INCREMENT PRIMARY KEY,
+    Nome VARCHAR(100) NOT NULL,
+    Especialidade VARCHAR(100)
+);
+ 
+-- ==========================================
+-- TABELA: Cursos
+-- ==========================================
+CREATE TABLE Cursos (
+    CursoID INT AUTO_INCREMENT PRIMARY KEY,
+    Nome VARCHAR(100) NOT NULL,
+    CargaHoraria INT NOT NULL
+);
+ 
+-- ==========================================
+-- TABELA: Turmas
+-- ==========================================
+CREATE TABLE Turmas (
+    TurmaID INT AUTO_INCREMENT PRIMARY KEY,
+    CursoID INT NOT NULL,
+    ProfessorID INT NOT NULL,
+    AnoLetivo YEAR NOT NULL,
+ 
+    FOREIGN KEY (CursoID) REFERENCES Cursos(CursoID),
+    FOREIGN KEY (ProfessorID) REFERENCES Professores(ProfessorID)
+);
+ 
+-- ==========================================
+-- TABELA: Matrículas
+-- ==========================================
+CREATE TABLE Matriculas (
+    MatriculaID INT AUTO_INCREMENT PRIMARY KEY,
+    AlunoID INT NOT NULL,
+    TurmaID INT NOT NULL,
+    DataMatricula DATE NOT NULL,
+ 
+    FOREIGN KEY (AlunoID) REFERENCES Alunos(AlunoID),
+    FOREIGN KEY (TurmaID) REFERENCES Turmas(TurmaID)
+);
+ 
+-- ==========================================
+-- INSERÇÃO DE DADOS (DML)
+-- ==========================================
+ 
+-- Alunos
+INSERT INTO Alunos (Nome, DataNascimento, Email) VALUES
+('Maria Santos', '2007-05-12', 'maria@gmail.com'),
+('João Silva', '2006-09-23', 'joao@gmail.com');
+ 
+-- Professores
+INSERT INTO Professores (Nome, Especialidade) VALUES
+('Ana Paiva', 'Matemática'),
+('Carlos Lima', 'História');
+ 
+-- Cursos
+INSERT INTO Cursos (Nome, CargaHoraria) VALUES
+('Matemática Básica', 60),
+('História Geral', 80);
+ 
+-- Turmas
+INSERT INTO Turmas (CursoID, ProfessorID, AnoLetivo) VALUES
+(1, 1, 2025),
+(2, 2, 2025);
+ 
+-- Matrículas
+INSERT INTO Matriculas (AlunoID, TurmaID, DataMatricula) VALUES
+(1, 1, '2025-02-10'),
+(2, 2, '2025-02-11');
+ 
+-- ==========================================
+-- CONSULTAS (EXEMPLOS)
+-- ==========================================
+SELECT * FROM Alunos;
+SELECT * FROM Professores;
+SELECT * FROM Cursos;
+SELECT * FROM Turmas;
+SELECT * FROM Matriculas;
+ 
+ 
