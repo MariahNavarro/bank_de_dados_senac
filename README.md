@@ -24,8 +24,7 @@ O objetivo deste trabalho é:
 - bank_de_dados_senac/
 - │
 - ├── README.md
-- └── sql_scripts/
-- └── escola.sql
+- └── bdEscola.sql
 
 ---
 
